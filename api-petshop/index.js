@@ -7,7 +7,7 @@ conexao.connect(erro => {
         console.log(erro)
     }
     else{
-        console.log("Conectado.")
+        console.log("Conectado")
         
         Tabelas.init(conexao)
         const app = customExpress()

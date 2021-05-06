@@ -1,7 +1,7 @@
-## Exercicio
+## Exercício
 
-> A partir do seguinte trecho de código:
-```
+ A partir do seguinte trecho de código:
+```javascript
 app.put('/api/usuarios/:idUsuario, async (requisicao, resposta) => {
   try {
     const dados = requisicao.body

@@ -3,4 +3,6 @@ api-petshop/servicos/node_modules
 
 api-petshop2/node_modules/
 
-ExerciciosAPI/node_modules/
+ExerciciosAPI/ex-api-sites/node_modules/
+ExerciciosAPI/ex-api-jogos/node_modules/
+ExerciciosAPI/ex-api-erros/node_modules/

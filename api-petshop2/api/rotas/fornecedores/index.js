@@ -8,7 +8,7 @@ roteador.get('/', async (req, res) => {
     res.status(200).send(JSON.stringify(resultados))
 })
 
-roteador.get('/:id', async (req, res) => {
+roteador.get('/:id', async (req, res, callback) => {
     try {
         const id = req.params.id
         const fornecedor = new Fornecedor({id: id})
@@ -16,13 +16,11 @@ roteador.get('/:id', async (req, res) => {
         res.status(200).send(JSON.stringify(fornecedor))
     }
     catch(e) {
-        res.status(404).send(JSON.stringify({
-            mensagem: e.message
-        }))
+        callback(e)
     }
 })
 
-roteador.post('/', async (req, res) => {
+roteador.post('/', async (req, res, callback) => {
     try{
         const dadosRecebidos = req.body;
         const fornecedor = new Fornecedor(dadosRecebidos)
@@ -30,14 +28,12 @@ roteador.post('/', async (req, res) => {
         res.status(201).send(JSON.stringify(fornecedor))
     }
     catch(e){
-        res.status(400).send(JSON.stringify({
-            mensagem: e.message
-        }))
+        callback(e)
     }
 
 })
 
-roteador.put('/:id', async (req, res) => {
+roteador.put('/:id', async (req, res, callback) => {
     try {
         const id = req.params.id
         const dadosRecebidos = req.body
@@ -47,14 +43,12 @@ roteador.put('/:id', async (req, res) => {
         res.status(204).end()
     }
     catch(e){
-        res.status(404).send(JSON.stringify({
-            mensagem: e.message
-        }))
+        callback(e)
     }
 })
 
 
-roteador.delete('/:id', async (req, res) => {
+roteador.delete('/:id', async (req, res, callback) => {
     try{
         const id = req.params.id
         const fornecedor = new Fornecedor({id : id})
@@ -63,9 +57,7 @@ roteador.delete('/:id', async (req, res) => {
         res.status(204).end()
     }
     catch(e){
-        res.status(404).send(JSON.stringify({
-            mensagem: e.message
-        }))
+       callback(e)
     }
 })
 

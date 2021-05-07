@@ -3,11 +3,12 @@ const NaoEncontrado = require('../../../erros/NaoEncontrado')
 const instancia = require('../../../database')
 
 module.exports = {
-    listar(idFornecedor){
+    listar(idFornecedor, parametros = {}){
+        parametros.fornecedor = idFornecedor
         return Modelo.findAll(
             { 
                 raw: true,
-                where: { fornecedor: idFornecedor}
+                where: parametros
             }
         )
     },
@@ -20,7 +21,7 @@ module.exports = {
         const encontrado = await Modelo.findOne({ where:{id: id, fornecedor: idFornecedor}, raw: true })
 
         if (!encontrado) {
-            throw new NaoEncontrado()
+            throw new NaoEncontrado('Produto')
         }
 
         return encontrado
@@ -45,6 +46,6 @@ module.exports = {
 
             return produto
         })
-    }
+    },
     
 }

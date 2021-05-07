@@ -84,8 +84,6 @@ class Produto {
         }
         */
        
-        console.log(dadosParaAtualizar)
-
         if (Object.keys(dadosParaAtualizar).length === 0){
             throw new DadosNaoFornecidos()
         }
@@ -100,14 +98,14 @@ class Produto {
 
     validar() {
         const campos = [
-            {nome: 'titulo' ,   tipo: 'string' },
-            {nome: 'preco'  ,   tipo: 'number' },
-            {nome: 'estoque',   tipo: 'number',    canBeNull: true }
+            {nome: 'titulo' ,   tipo: 'string',    canBeNull: false },
+            {nome: 'preco'  ,   tipo: 'number',    canBeNull: false },
+            {nome: 'estoque',   tipo: 'number',    canBeNull: true  }
         ]
 
         campos.forEach( (campo) => {
             const valor = this[campo.nome]
-            if (typeof(valor) !== campo.tipo || ((valor.length === 0 || valor === 0) && !campo.notNull) ){
+            if (typeof(valor) !== campo.tipo || ((valor.length === 0 || valor === 0) && campo.notNull) ){
                 throw new CampoInvalido(campo.nome)
             }
         })
@@ -121,6 +119,7 @@ class Produto {
             this.estoque
         )
     }
+
 
 }
 

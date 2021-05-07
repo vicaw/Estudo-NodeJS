@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const config = require('config')
 
-const roteador = require('./rotas/fornecedores')
+const roteadorFornecedores = require('./rotas/fornecedores')
 
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
@@ -32,7 +32,7 @@ app.use((req, res, prox) => {
     prox()
 })
 
-app.use('/api/fornecedores', roteador)
+app.use('/api/fornecedores', roteadorFornecedores)
 
 app.use((erro, req, res, next) => {
     let status = 500

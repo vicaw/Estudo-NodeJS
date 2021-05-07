@@ -4,18 +4,18 @@ const Fornecedor = require('./Fornecedor')
 const SerializadorFornecedor = require('../../serializador').SerializadorFornecedor
 
 
-roteador.get('/', async (req, res, callback) => {
+roteador.get('/', async (req, res, next) => {
     try{
         const resultados = await TabelaFornecedor.listar()
         const serializador = new SerializadorFornecedor(res.getHeader('Content-Type'))
         res.status(200).send(serializador.serializar(resultados))
     }
     catch(e){
-        callback(e)
+        next(e)
     }
 })
 
-roteador.get('/:id', async (req, res, callback) => {
+roteador.get('/:id', async (req, res, next) => {
     try {
         const id = req.params.id
         const fornecedor = new Fornecedor({id: id})
@@ -24,11 +24,11 @@ roteador.get('/:id', async (req, res, callback) => {
         res.status(200).send(serializador.serializar(fornecedor))
     }
     catch(e) {
-        callback(e)
+        next(e)
     }
 })
 
-roteador.post('/', async (req, res, callback) => {
+roteador.post('/', async (req, res, next) => {
     try{
         const dadosRecebidos = req.body;
         const fornecedor = new Fornecedor(dadosRecebidos)
@@ -37,12 +37,12 @@ roteador.post('/', async (req, res, callback) => {
         res.status(201).send(serializador.serializar(fornecedor))
     }
     catch(e){
-        callback(e)
+        next(e)
     }
 
 })
 
-roteador.put('/:id', async (req, res, callback) => {
+roteador.put('/:id', async (req, res, next) => {
     try {
         const id = req.params.id
         const dadosRecebidos = req.body
@@ -52,12 +52,12 @@ roteador.put('/:id', async (req, res, callback) => {
         res.status(204).end()
     }
     catch(e){
-        callback(e)
+        next(e)
     }
 })
 
 
-roteador.delete('/:id', async (req, res, callback) => {
+roteador.delete('/:id', async (req, res, next) => {
     try{
         const id = req.params.id
         const fornecedor = new Fornecedor({id : id})
@@ -66,8 +66,25 @@ roteador.delete('/:id', async (req, res, callback) => {
         res.status(204).end()
     }
     catch(e){
-       callback(e)
+        next(e)
     }
 })
+
+const roteadorProdutos = require('./produtos')
+
+const verificarFornecedor = async (req, res, next) =>{
+    try{
+        const id = req.params.idFornecedor
+        const fornecedor = new Fornecedor({id : id})
+        await fornecedor.carregar()
+        req.fornecedor = fornecedor
+        next()
+    }
+    catch(e){
+        next(e)
+    }
+}
+
+roteador.use('/:idFornecedor/produtos', verificarFornecedor, roteadorProdutos)
 
 module.exports = roteador

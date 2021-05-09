@@ -5,4 +5,5 @@ api-petshop2/node_modules/
 
 ExerciciosAPI/ex-api-sites/node_modules/
 ExerciciosAPI/ex-api-jogos/node_modules/
-ExerciciosAPI/ex-api-erros/node_modules/
+
+orm-sequelize/node_modules/

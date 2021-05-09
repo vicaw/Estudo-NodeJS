@@ -10,17 +10,37 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Pessoas.hasMany(models.Turmas, {foreignKey: 'docente_id'})
+      Pessoas.hasMany(models.Matriculas, {foreignKey: 'estudante_id'})
     }
   };
   Pessoas.init({
-    nome: DataTypes.STRING,
+    nome: {
+      type: DataTypes.STRING,
+      validate:{
+        functionValidate: function(dado){
+          if(dado.length < 3) throw new Error('O campo Nome deve ter mais de 3 caracteres.')
+        }
+      }
+    },
+
     ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+
+    email: {
+      type: DataTypes.STRING,
+      validate: { isEmail: { args: true, msg:'E-mail inválido.'} }
+    },
+
     role: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'Pessoas',
+    paranoid: true,
+    defaultScope: { where:{ativo:true} },
+    scopes:{
+      all: { where:{} }
+    }
   });
   return Pessoas;
 };

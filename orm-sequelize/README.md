@@ -1,12 +1,12 @@
 
-#Sobre
+## Sobre
 API Rest desenvolvida durante o curso de ORM-Sequelize
 
-#Diagrama Relacional
+## Diagrama Relacional
 
 ![Diagrama Relacional](https://raw.githubusercontent.com/vicaw/Estudo-NodeJS/master/orm-sequelize/DiagramaRelacional.png)
 
-#Requisitos do projeto
+## Requisitos do projeto
 
 - O cliente não gostaria que registros importantes do sistema, como as Pessoas, sejam apagados definitivamente do banco de dados.
 

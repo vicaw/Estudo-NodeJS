@@ -4,7 +4,7 @@ API Rest desenvolvida durante o curso de ORM-Sequelize
 
 #Diagrama Relacional
 
-![alt text](https://github.com/vicaw/orm-sequelize/blob/master/DiagramaRelacional.png?raw=true)
+![alt text](https://github.com/vicaw/Estudo-NodeJS/master/orm-sequelize/DiagramaRelacional.png)
 
 #Requisitos do projeto
 

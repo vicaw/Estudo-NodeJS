@@ -1,7 +1,10 @@
 const passport = require('passport')
+const Usuario = require('./usuarios-modelo')
+const { InvalidArgumentError } =  require('../erros')
+const tokens = require('./tokens')
 
 module.exports = {
-    local: (req, res, next) => {
+    local(req, res, next) {
         passport.authenticate('local', {session: false}, 
             (erro, usuario, info) => {
                 if(erro && erro.name === 'InvalidArgumentError'){
@@ -22,7 +25,7 @@ module.exports = {
         )(req, res, next)
     },
     
-    bearer: (req, res, next) => {
+    bearer(req, res, next) {
         passport.authenticate('bearer', {session: false}, 
             (erro, usuario, info) => {
                 if(erro && erro.name === 'JsonWebTokenError'){
@@ -46,5 +49,20 @@ module.exports = {
                 return next()
             }
         )(req, res, next)
+    },
+
+    async refresh(req, res, next) {
+        try{
+            const { refreshToken } = req.body
+            const id = await tokens.refresh.verifica(refreshToken)
+            await tokens.refresh.invalida(refreshToken)
+            req.user = await Usuario.buscaPorId(id)
+            return next()
+        } catch(erro) {
+            if(erro.name === 'InvalidArgumentError'){
+                return res.status(401).json({erro: erro.message})
+            }
+            return res.status(500).json({erro: erro.message})
+        }
     }
 }

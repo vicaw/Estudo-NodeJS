@@ -7,8 +7,12 @@ module.exports = app => {
     .post(middlewaresAutenticacao.local, usuariosControlador.login)
 
   app
+    .route('/usuarios/refresh_token')
+    .post(middlewaresAutenticacao.refresh, usuariosControlador.login)
+
+  app
     .route('/usuarios/logout')
-    .get(middlewaresAutenticacao.bearer, usuariosControlador.logout)
+    .post([middlewaresAutenticacao.refresh, middlewaresAutenticacao.bearer], usuariosControlador.logout)
   
   app
     .route('/usuarios')

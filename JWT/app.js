@@ -4,7 +4,7 @@ const app = express();
 const { estrategiasAutenticacao } = require('./src/usuarios')
 
 app.use(
-  express.urlencoded( {extended: true} )
+  express.json()
 );
 
 module.exports = app;
